@@ -4,6 +4,8 @@ This is a new [**React Native**](https://reactnative.dev) project, bootstrapped 
 
 >**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
 
+NOTE: This project is required SDK > 17.0.0 and node > 20.0.0 and pod > 1.15.0. You can use NVM and sdkman to install the required versions.
+
 ## Step 1: Start the Metro Server
 
 First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
