@@ -7,6 +7,7 @@ import {getPx} from '#utils/APP_UTILS';
 import {ICONS} from '#constants/ICONS';
 import {COLORS} from '#constants/COLORS';
 import {Item} from './Item';
+import { SHADOW } from '#constants/STYLES';
 
 export interface ExpandableViewItem {
   id: string;
@@ -31,7 +32,7 @@ export const ExpandableView = (props: ExpandableViewProps) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, SHADOW]}>
       <TouchableOpacity onPress={onPressExpand} style={styles.buttonContainer}>
         <View style={styles.buttonViewContainer}>
           <AppText text={text} weight={600} size={getPx(10)} />

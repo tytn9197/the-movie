@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import {MovieListStyles} from './MovieListStyles';
 import {useStyles} from 'react-native-unistyles';
-import {FLEX_1} from '#constants/STYLES';
+import {FLEX_1, SHADOW} from '#constants/STYLES';
 import {
   ExpandableView,
   ExpandableViewItem,
@@ -178,7 +178,7 @@ const MovieList = () => {
           onPressExpand={handleSortByExpand}
         />
         <TextInput
-          style={styles.input}
+          style={[styles.input, SHADOW]}
           placeholder="Search..."
           placeholderTextColor={COLORS.GRAY}
           value={search}

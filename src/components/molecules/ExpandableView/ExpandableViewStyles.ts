@@ -8,6 +8,7 @@ export const ExpandableViewStyles = createStyleSheet(() => ({
     alignItems: 'center',
     borderWidth: getPx(1),
     borderColor: COLORS.BORDER,
+    borderRadius: getPx(3),
     flexShrink:1,
     width: "100%",
   },
