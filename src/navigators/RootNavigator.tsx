@@ -4,7 +4,8 @@ import MovieNavigator from './MovieNavigator';
 import WatchList from '#screens/watch-list/WatchList';
 import {COLORS} from '#constants/COLORS';
 import {ICONS} from '#constants/ICONS';
-import { TabButton } from '#atoms/TabButton';
+import {TabButton} from '#atoms/TabButton';
+import {getPx} from '#utils/APP_UTILS';
 
 export type BottomTabParamList = {
   MovieStack: undefined;
@@ -14,11 +15,20 @@ export type BottomTabParamList = {
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
 const MovieTabIcon = ({color, size}: {color: string; size: number}) => (
-  <ICONS.IC_HOME color={color} width={size} height={size} />
+  <ICONS.IC_HOME
+    color={color}
+    width={getPx(size * 0.5)}
+    height={getPx(size * 0.5)}
+  />
 );
 
 const WatchListTabIcon = ({color, size}: {color: string; size: number}) => (
-  <ICONS.IC_WATCHLIST color={color} width={size * 0.95} height={size * 0.95} />
+  // we are scaling the size of the icon to 95% of the size of the tab bar icon
+  <ICONS.IC_WATCHLIST
+    color={color}
+    width={getPx(size * 0.45)}
+    height={getPx(size * 0.45)}
+  />
 );
 
 const RootNavigator = (): React.JSX.Element => {
@@ -32,7 +42,8 @@ const RootNavigator = (): React.JSX.Element => {
         animation: 'fade',
         tabBarShowLabel: false,
         tabBarIconStyle: {
-          marginTop: 10,
+          marginTop: getPx(10),
+          marginBottom: getPx(10),
         },
       }}>
       <BottomTab.Screen
