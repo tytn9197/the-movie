@@ -6,13 +6,13 @@
  */
 import React from 'react';
 import {
-  DefaultTheme,
   NavigationContainer,
 } from '@react-navigation/native';
 import {Provider} from 'react-redux';
-import {store} from '#redux/store';
 import RootNavigator from '#navigators/RootNavigator';
 import {UnistylesRegistry} from 'react-native-unistyles';
+import store, { persistor } from '#redux/store';
+import { PersistGate } from 'redux-persist/integration/react';
 
 const light = {
   bgDisabledButton: '#00000059',
@@ -38,9 +38,11 @@ UnistylesRegistry.addThemes({
 const App = (): React.JSX.Element => {
   return (
     <Provider store={store}>
-      <NavigationContainer>
-        <RootNavigator />
-      </NavigationContainer>
+      <PersistGate loading={null} persistor={persistor}>
+        <NavigationContainer>
+          <RootNavigator />
+        </NavigationContainer>
+      </PersistGate>
     </Provider>
   );
 };
