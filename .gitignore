@@ -104,3 +104,6 @@ index.ios.bundle
 *.tmp
 .env
 .env.*
+
+# private key
+src/constants/KEYS.ts
