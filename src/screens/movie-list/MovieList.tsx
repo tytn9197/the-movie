@@ -20,15 +20,22 @@ import {COLORS} from '#constants/COLORS';
 import { ResultType } from '#apis/movies/MovieListType';
 import MovieItem from './MovieItem';
 import { AppText } from '#atoms/AppText/AppText';
+import { getMovieTypeName, setMovieType } from '#slices/homeSlice';
+import { useAppDispatch, useAppSelector } from '#hooks/AppHooks';
 
 const MovieList = () => {
   const {styles} = useStyles(MovieListStyles);
 
+  const movieTypeText = useAppSelector(getMovieTypeName);
+  const movieType = useAppSelector(state => state.home.movieType);
+
   const [search, setSearch] = useState<string>('');
   const [page, setPage] = useState<number>(1);
 
-  const {data, isLoading, isError, refetch, isFetching} = useGetMovieListQuery({ 
-    type: 'now_playing', 
+  const dispatch = useAppDispatch();
+
+  const {data, isLoading, isError, isFetching} = useGetMovieListQuery({ 
+    type: movieType, 
     page: page 
   });
 
@@ -45,14 +52,13 @@ const MovieList = () => {
   };
 
   const handleEndReached = () => {
-    if (!isFetching && data?.total_pages && page < data.total_pages) {
+    if (!isFetching && !!data?.total_pages && page < data.total_pages) {
       setPage(prevPage => prevPage + 1);
     }
   };
 
   const handleRefresh = () => {
     setPage(1)
-    refetch()
   };
 
   if (isLoading) {
@@ -66,8 +72,9 @@ const MovieList = () => {
   return (
     <SafeAreaView style={[FLEX_1, styles.container]}>
       <ICONS.IC_LOGO width={getPx(57*0.7)} height={getPx(80*0.7)} style={styles.logo} />
-      <ExpandableView text="playin" items={['1', '2', '3']} />
-      <ExpandableView text="playin" items={['1', '2', '3']} />
+      <ExpandableView text={movieTypeText} items={['1', '2', '3']} />
+      <View style={{height: getPx(8)}} />
+      <ExpandableView text="Sort by" items={['1', '2', '3']} />
       <TextInput
         style={styles.input}
         placeholder="Search..."
@@ -75,7 +82,9 @@ const MovieList = () => {
         value={search}
         onChangeText={setSearch}
       />
-      <TouchableOpacity style={styles.searchButton}>
+      <TouchableOpacity style={styles.searchButton} onPress={() => {
+        dispatch(setMovieType('popular'));
+      }}>
         <AppText text="Search" weight={600} size={getPx(10)} color={COLORS.LIGHT_GRAY} />
       </TouchableOpacity>
       {isError && <Text style={{color: COLORS.RED}}>Error</Text>}

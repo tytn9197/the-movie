@@ -1,0 +1,39 @@
+import { RootState } from '#redux/store'
+import { createSlice } from '@reduxjs/toolkit'
+import type { PayloadAction } from '@reduxjs/toolkit'
+
+// Define the TS type for the counter slice's state
+export interface IHomeState {
+  movieType: 'now_playing' | 'popular' | 'upcoming'
+}
+
+// Define the initial value for the slice state
+const initialState: IHomeState = {
+  movieType: 'now_playing',
+}
+
+export const homeSlice = createSlice({
+  name: 'home',
+  initialState,
+  reducers: {
+    setMovieType: (state, action: PayloadAction<IHomeState['movieType']>) => {
+      state.movieType = action.payload;
+    },
+  },
+})
+
+// Action creators are generated for each case reducer function
+export const { setMovieType } = homeSlice.actions
+
+export default homeSlice
+
+export const getMovieTypeName = (state: RootState) : string => {
+    switch (state.home.movieType) {
+        case 'now_playing':
+            return 'Now Playing';
+        case 'popular':
+            return 'Popular';
+        case 'upcoming':
+            return 'Upcoming';
+    }
+}

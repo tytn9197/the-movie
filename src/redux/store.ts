@@ -18,17 +18,17 @@ import {reduxPersistStorage} from '#utils/MMKVStorage';
 import persistStore from 'redux-persist/es/persistStore';
 import { APIServices } from '#apis/APIServices';
 import { setupListeners } from '@reduxjs/toolkit/query';
+import homeSlice from '#slices/homeSlice';
 
 const persistConfig = {
   key: 'root',
   version: 1,
   storage: reduxPersistStorage, // MMKVStorage,
-  blacklist: [], // these reduce will not persist data
-  whitelist: ['counter'], // these reduce will persist data
 };
 
 const rootReducer = combineReducers({
   counter: counterSlice.reducer,
+  home: homeSlice.reducer,
   [APIServices.reducerPath]: APIServices.reducer,
 });
 
