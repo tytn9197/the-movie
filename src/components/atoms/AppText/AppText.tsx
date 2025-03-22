@@ -28,6 +28,10 @@ export interface TextProps extends Omit<RNTextProps, 'style'> {
    * Text color.
    */
   color?: string;
+  /**
+   * Text numberOfLines.
+   */
+  numberOfLines?: number;
 }
 
 export const AppText = (props: TextProps) => {

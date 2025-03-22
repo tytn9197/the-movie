@@ -51,7 +51,6 @@ const MovieList = () => {
     );
   }
 
-
   return (
     <SafeAreaView style={[FLEX_1, styles.container]}>
       <ICONS.IC_LOGO width={getPx(57*0.7)} height={getPx(80*0.7)} style={styles.logo} />

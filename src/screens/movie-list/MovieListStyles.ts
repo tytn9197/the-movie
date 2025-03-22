@@ -29,7 +29,9 @@ export const MovieListStyles = createStyleSheet(() => ({
     borderWidth: getPx(1),
     borderColor: COLORS.BORDER,
     borderRadius: getPx(3),
-    padding: getPx(10),
+    height: getPx(100),
+    width: '100%',
+    flexDirection: 'row',
   },
   searchButton: {
     backgroundColor: COLORS.LIGHT_GRAY_2,
@@ -41,5 +43,15 @@ export const MovieListStyles = createStyleSheet(() => ({
     marginBottom: getPx(10),
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  logoContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: getPx(5),
+  },
+  itemDetailsContainer: {
+    flexShrink: 1,
+    justifyContent: 'center',
+    marginEnd: getPx(3),
   }
 }));
