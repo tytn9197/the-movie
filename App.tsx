@@ -13,26 +13,20 @@ import RootNavigator from '#navigators/RootNavigator';
 import {UnistylesRegistry} from 'react-native-unistyles';
 import store, { persistor } from '#redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
+import { THEMES_COLOR } from '#constants/THEMES_COLOR';
 
-const light = {
-  bgDisabledButton: '#00000059',
-  txtDisabledButton: '#FFFFFF59',
-};
-const dark = {
-  bgDisabledButton: '#FFFFFF1A',
-  txtDisabledButton: '#FFFFFF59',
-};
 
 export type AppThemes = {
-  light: typeof light;
-  dark: typeof dark;
+  light: typeof THEMES_COLOR.light;
+  dark: typeof THEMES_COLOR.dark;
 };
 
 UnistylesRegistry.addThemes({
-  light,
-  dark,
+  light: THEMES_COLOR.light,
+  dark: THEMES_COLOR.dark,
 }).addConfig({
   initialTheme: 'light',
+  adaptiveThemes: false,
 });
 
 const App = (): React.JSX.Element => {
