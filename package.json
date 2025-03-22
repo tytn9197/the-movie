@@ -51,6 +51,7 @@
     "@storybook/addon-ondevice-controls": "^8.6.2",
     "@storybook/addon-ondevice-notes": "^8.4.2",
     "@storybook/react-native": "^8.6.2",
+    "@types/lodash": "^4.17.16",
     "@types/react": "^18.2.6",
     "@types/react-test-renderer": "^18.0.0",
     "babel-jest": "^29.6.3",
@@ -61,6 +62,7 @@
     "prettier": "2.8.8",
     "react-native-svg-transformer": "^1.5.0",
     "react-test-renderer": "18.3.1",
+    "reactotron-react-native": "^5.1.12",
     "typescript": "5.0.4"
   },
   "engines": {

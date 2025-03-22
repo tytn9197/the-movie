@@ -10,6 +10,10 @@ import {
   ReanimatedLogLevel,
 } from 'react-native-reanimated';
 
+if (__DEV__) {
+  require("./reactotron/ReactotronConfig");
+}
+
 // This is the default configuration
 configureReanimatedLogger({
   level: ReanimatedLogLevel.warn,
