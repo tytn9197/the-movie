@@ -12,7 +12,7 @@ const Stack = createNativeStackNavigator();
 
 const MovieNavigator = (): React.JSX.Element => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={{headerShown: false}}>
       <Stack.Screen name={'MovieList'} component={MovieList} />
       <Stack.Screen name={'MovieDetails'} component={MovieDetails} />
     </Stack.Navigator>
