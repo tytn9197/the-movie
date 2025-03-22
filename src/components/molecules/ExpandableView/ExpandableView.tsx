@@ -40,7 +40,7 @@ export const ExpandableView = (props: ExpandableViewProps) => {
         onPress={handlePress}
         style={styles.buttonContainer}>
         <View style={styles.buttonViewContainer}>
-          <AppText text={text} weight={600} size={getPx(16)} />
+          <AppText text={text} weight={600} size={getPx(10)} />
           {isExpanded ? (
             <ICONS.IC_CHEVRON_DOWN
               width={getPx(13)}

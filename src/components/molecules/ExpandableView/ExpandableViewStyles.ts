@@ -1,3 +1,4 @@
+import { COLORS } from '#constants/COLORS';
 import { getPx } from '#utils/APP_UTILS';
 import { StyleSheet } from 'react-native';
 import {createStyleSheet} from 'react-native-unistyles';
@@ -6,7 +7,7 @@ export const ExpandableViewStyles = createStyleSheet(() => ({
   container: {
     alignItems: 'center',
     borderWidth: getPx(1),
-    borderColor: '#E3E3E3',
+    borderColor: COLORS.BORDER,
     flexShrink:1,
     width: "100%",
   },
@@ -26,7 +27,7 @@ export const ExpandableViewStyles = createStyleSheet(() => ({
   },
   contentContainer: (isExpanded: boolean) => ({
     borderTopWidth: isExpanded ? StyleSheet.hairlineWidth : 0,
-    borderTopColor: '#E3E3E3',
+    borderTopColor: COLORS.BORDER,
     width: "100%",
     flexShrink:1,
   }),
