@@ -1,5 +1,5 @@
 import React from 'react';
-import {View} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import {MovieListStyles} from './MovieListStyles';
 import {useStyles} from 'react-native-unistyles';
 import {ResultType} from '#apis/movies/MovieListType';
@@ -8,12 +8,23 @@ import {FLEX_GROW_1, FLEX_SHRINK_1} from '#constants/STYLES';
 import {AppText} from '#atoms/AppText/AppText';
 import {getPx} from '#utils/APP_UTILS';
 import {COLORS} from '#constants/COLORS';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { MovieNavigatorParamList } from '#navigators/MovieNavigator';
 
 const MovieItem = ({item}: {item: ResultType}) => {
   const {styles} = useStyles(MovieListStyles);
 
+  const navigation = useNavigation<NativeStackNavigationProp<MovieNavigatorParamList>>();
+  
+  const handlePress = () => {
+    navigation.navigate('MovieDetails', {
+      id: item.id.toString(),
+    });
+  };
+
   return (
-    <View style={styles.movieItemContainer}>
+    <TouchableOpacity onPress={handlePress} style={styles.movieItemContainer}>
       <View style={styles.logoContainer}>
         <ICONS.IC_LOGO style={FLEX_GROW_1} />
       </View>
@@ -41,7 +52,7 @@ const MovieItem = ({item}: {item: ResultType}) => {
           numberOfLines={2}
         />
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 export default MovieItem;

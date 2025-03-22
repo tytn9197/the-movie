@@ -3,12 +3,12 @@ import MovieDetails from '#screens/movie-details/MovieDetails';
 import MovieList from '#screens/movie-list/MovieList';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-export type BottomTabParamList = {
+export type MovieNavigatorParamList = {
   MovieList: undefined;
   MovieDetails: {id: string};
 };
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator<MovieNavigatorParamList>();
 
 const MovieNavigator = (): React.JSX.Element => {
   return (
