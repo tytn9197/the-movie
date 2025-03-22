@@ -13,12 +13,13 @@ export const APIServices = createApi({
       return headers;
     },
   }),
+  keepUnusedDataFor: 30,
   endpoints: builder => ({
     getMovieDetails: builder.query<MovieDetailsType, number>({
       query: (id) => `movie/${id}`,
     }),
-    getMovieList: builder.query<MovieListType, string>({
-      query: (type, page = 1) => `movie/${type}?page=${page}`,
+    getMovieList: builder.query<MovieListType, {type: string, page: number}>({
+      query: ({type, page = 1}) => `movie/${type}?page=${page}`,
     }),
   }),
 });

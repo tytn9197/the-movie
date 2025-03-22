@@ -8,6 +8,7 @@ import {
   TextInput,
   View,
   TouchableOpacity,
+  RefreshControl,
 } from 'react-native';
 import {MovieListStyles} from './MovieListStyles';
 import {useStyles} from 'react-native-unistyles';
@@ -23,12 +24,12 @@ import { AppText } from '#atoms/AppText/AppText';
 const MovieList = () => {
   const {styles} = useStyles(MovieListStyles);
 
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState<string>('');
+  const [page, setPage] = useState<number>(1);
 
-  const {data, isLoading, isError} = useGetMovieListQuery('now_playing', {
-    refetchOnMountOrArgChange: true,
-    refetchOnFocus: true,
-    refetchOnReconnect: true,
+  const {data, isLoading, isError, refetch, isFetching, error} = useGetMovieListQuery({ 
+    type: 'now_playing', 
+    page: page 
   });
 
   const renderEmptyComponent = () => {
@@ -41,6 +42,17 @@ const MovieList = () => {
 
   const renderSeparator = () => {
     return <View style={{height: getPx(10)}} />
+  };
+
+  const handleEndReached = () => {
+    if (!isFetching && data?.total_pages && page < data.total_pages) {
+      setPage(prevPage => prevPage + 1);
+    }
+  };
+
+  const handleRefresh = () => {
+    setPage(1)
+    refetch()
   };
 
   if (isLoading) {
@@ -75,6 +87,16 @@ const MovieList = () => {
           keyExtractor={item => item.id.toString()}
           ListEmptyComponent={renderEmptyComponent}
           ItemSeparatorComponent={renderSeparator}
+          onEndReached={handleEndReached}
+          onEndReachedThreshold={0.5}
+          refreshing={isLoading}
+          refreshControl={
+            <RefreshControl
+                tintColor={COLORS.BLACK}
+                refreshing={isLoading}
+                onRefresh={handleRefresh}
+            />
+        }
         />
       )}
     </SafeAreaView>
