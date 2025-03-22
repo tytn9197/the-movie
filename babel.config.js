@@ -19,6 +19,7 @@ module.exports = {
           '#redux': './src/redux',
           '#hooks': './src/hooks',
           '#utils': './src/utils',
+          '#apis': './src/apis',
         },
         extensions: [".js", ".jsx", ".es", ".es6", ".mjs", ".ts", ".tsx"]
       },

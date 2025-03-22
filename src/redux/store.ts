@@ -16,6 +16,8 @@ import {
 } from 'redux-persist';
 import {reduxPersistStorage} from '#utils/MMKVStorage';
 import persistStore from 'redux-persist/es/persistStore';
+import { APIServices } from '#apis/APIServices';
+import { setupListeners } from '@reduxjs/toolkit/query';
 
 const persistConfig = {
   key: 'root',
@@ -27,6 +29,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   counter: counterSlice.reducer,
+  [APIServices.reducerPath]: APIServices.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -39,8 +42,10 @@ const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER], //
       },
-    }),
+    }).concat(APIServices.middleware),
 });
+
+setupListeners(store.dispatch);
 
 export default store;
 

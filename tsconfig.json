@@ -19,6 +19,7 @@
       "#redux/*": ["src/redux/*"],
       "#hooks/*": ["src/hooks/*"],
       "#utils/*": ["src/utils/*"],
+      "#apis/*": ["src/apis/*"],
 
       // We want to expose the exports of the buttons index file
       // "buttons": ["src/components/buttons/index"]
