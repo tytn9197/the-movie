@@ -31,8 +31,8 @@ export const ExpandableViewStyles = createStyleSheet(() => ({
     width: "100%",
     flexShrink:1,
   }),
-  textContainer: {
-
-  },
+  textContainer: (isSelected: boolean) => ({
+    backgroundColor: isSelected ? COLORS.GRAY : 'transparent',
+  }),
 
 }));
