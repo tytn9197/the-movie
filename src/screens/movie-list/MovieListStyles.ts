@@ -53,5 +53,17 @@ export const MovieListStyles = createStyleSheet(() => ({
     flexShrink: 1,
     justifyContent: 'center',
     marginEnd: getPx(3),
+  },
+  backToTopButton: {
+    alignSelf: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: COLORS.DARK_BLUE,
+    width: getPx(20),
+    height: getPx(20),
+    position: 'absolute',
+    bottom: getPx(10),
+    right: 0,
+    borderRadius: getPx(10),
   }
 }));
