@@ -5,6 +5,9 @@ import {createStyleSheet} from 'react-native-unistyles';
 
 export const MovieListStyles = createStyleSheet(() => ({
   container: {
+    backgroundColor: COLORS.WHITE,
+  },
+  marginHorizontal: {
     marginHorizontal: getPx(12),
   },
   logo: {

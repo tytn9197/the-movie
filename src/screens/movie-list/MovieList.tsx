@@ -224,38 +224,40 @@ const MovieList = () => {
 
   return (
     <SafeAreaView style={[FLEX_1, styles.container]}>
-      {isError && (
-        <AppText color={COLORS.RED} size={getPx(10)} weight={600}>
-          {JSON.stringify(error)}
-        </AppText>
-      )}
-      {!!data?.results && (
-        <>
-          <FlatList
-            ref={flatListRef}
-            showsVerticalScrollIndicator={false}
-            onScroll={scrollHandler}
-            style={FLEX_1}
-            data={data?.results}
-            renderItem={renderItem}
-            keyExtractor={item => JSON.stringify(item)}
-            ListEmptyComponent={renderEmptyComponent}
-            ItemSeparatorComponent={renderSeparator}
-            onEndReached={handleEndReached}
-            onEndReachedThreshold={0.5}
-            refreshing={isLoading}
-            ListHeaderComponent={renderHeader}
-            refreshControl={
-              <RefreshControl
-                tintColor={COLORS.BLACK}
-                refreshing={isLoading}
-                onRefresh={handleRefresh}
-              />
-            }
-          />
-          {renderBackToTopButton()}
-        </>
-      )}
+      <View style={[FLEX_1, styles.marginHorizontal]}>
+        {isError && (
+          <AppText color={COLORS.RED} size={getPx(10)} weight={600}>
+            {JSON.stringify(error)}
+          </AppText>
+        )}
+        {!!data?.results && (
+          <>
+            <FlatList
+              ref={flatListRef}
+              showsVerticalScrollIndicator={false}
+              onScroll={scrollHandler}
+              style={FLEX_1}
+              data={data?.results}
+              renderItem={renderItem}
+              keyExtractor={item => JSON.stringify(item)}
+              ListEmptyComponent={renderEmptyComponent}
+              ItemSeparatorComponent={renderSeparator}
+              onEndReached={handleEndReached}
+              onEndReachedThreshold={0.5}
+              refreshing={isLoading}
+              ListHeaderComponent={renderHeader}
+              refreshControl={
+                <RefreshControl
+                  tintColor={COLORS.BLACK}
+                  refreshing={isLoading}
+                  onRefresh={handleRefresh}
+                />
+              }
+            />
+            {renderBackToTopButton()}
+          </>
+        )}
+      </View>
     </SafeAreaView>
   );
 };

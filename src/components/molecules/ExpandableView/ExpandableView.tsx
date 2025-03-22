@@ -52,15 +52,17 @@ export const ExpandableView = (props: ExpandableViewProps) => {
         </View>
       </TouchableOpacity>
       {isExpanded && (
-        <View style={styles.contentContainer(isExpanded)}>
-          {items?.map(item => (
-            <Item
-              key={item.id}
-              text={item.text}
-              onPress={() => handleItemPress(item)}
-              isSelected={item.id === selectedId}
-            />
-          ))}
+        <View style={styles.contentSeparator(isExpanded)}>
+          <View style={styles.contentContainer}>
+            {items?.map(item => (
+              <Item
+                key={item.id}
+                text={item.text}
+                onPress={() => handleItemPress(item)}
+                isSelected={item.id === selectedId}
+              />
+            ))}
+          </View>
         </View>
       )}
     </View>

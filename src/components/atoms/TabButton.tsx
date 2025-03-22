@@ -15,7 +15,7 @@ export const TabButton = (props: any) => {
       }).start();
     } else {
       Animated.spring(scale, {
-        toValue: 0.6,
+        toValue: 0.4,
         useNativeDriver: true,
       }).start();
     }
