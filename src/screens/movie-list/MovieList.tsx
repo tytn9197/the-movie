@@ -27,7 +27,7 @@ const MovieList = () => {
   const [search, setSearch] = useState<string>('');
   const [page, setPage] = useState<number>(1);
 
-  const {data, isLoading, isError, refetch, isFetching, error} = useGetMovieListQuery({ 
+  const {data, isLoading, isError, refetch, isFetching} = useGetMovieListQuery({ 
     type: 'now_playing', 
     page: page 
   });
@@ -84,7 +84,7 @@ const MovieList = () => {
           style={FLEX_1}
           data={data?.results}
           renderItem={renderItem}
-          keyExtractor={item => item.id.toString()}
+          keyExtractor={item => JSON.stringify(item)}
           ListEmptyComponent={renderEmptyComponent}
           ItemSeparatorComponent={renderSeparator}
           onEndReached={handleEndReached}
