@@ -3,7 +3,6 @@ import React, {useRef, useState} from 'react';
 import {
   FlatList,
   SafeAreaView,
-  ActivityIndicator,
   TextInput,
   View,
   TouchableOpacity,
@@ -32,6 +31,7 @@ import Animated, {
   useSharedValue,
   interpolate,
 } from 'react-native-reanimated';
+import { AppLoader } from '#atoms/AppLoader/AppLoader';
 
 const MovieList = () => {
   const {styles} = useStyles(MovieListStyles);
@@ -216,9 +216,7 @@ const MovieList = () => {
 
   if (isLoading) {
     return (
-      <SafeAreaView style={[FLEX_1, styles.container]}>
-        <ActivityIndicator size="large" color={COLORS.BLACK} />
-      </SafeAreaView>
+      <AppLoader />
     );
   }
 
