@@ -11,4 +11,6 @@ export const COLORS = {
     LIGHT_GRAY: '#00000080',
     LIGHT_GRAY_2: '#E4E4E4',
     LIGHT_GRAY_3: '#F8F8F8',
+    LIGHT_GRAY_4: '#FFFFFFB2',
+    LIGHT_GRAY_5: '#D9D9D900',
 }
