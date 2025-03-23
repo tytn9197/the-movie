@@ -11,6 +11,9 @@ export const MovieDetailsStyles = createStyleSheet(() => ({
     alignSelf: 'center',
     justifyContent: 'center',
   },
+  dataContainer: {
+    flex: 1,
+  },
   contentContainer: {
     flexShrink: 1,
     width: '100%',
@@ -83,5 +86,26 @@ export const MovieDetailsStyles = createStyleSheet(() => ({
     flexDirection: 'row',
     alignItems: 'center',
     gap: getPx(5),
+  },
+  castContainer: {
+    margin: getPx(15),
+    gap: getPx(10),
+  },
+  castItemContainer: {
+    width: getPx(90),
+    height: getPx(160),
+    borderRadius: getPx(3),
+    borderWidth: 1,
+    borderColor: COLORS.BORDER,
+    overflow: 'hidden',
+  },
+  castItemNameContainer: {
+    flex: 1,
+    margin: getPx(5),
+  },
+  castItemImage: {
+    width: '100%',
+    height: '60%',
+    borderRadius: getPx(5),
   },
 }));
