@@ -141,6 +141,13 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		6A0B960A2D8FFA8C00F088BC /* Logos */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Logos;
+			sourceTree = "<group>";
+		};
 		6AA634C52D8EB80C00CBB889 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -174,6 +181,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				6A0B960A2D8FFA8C00F088BC /* Logos */,
 				6AA634C52D8EB80C00CBB889 /* Fonts */,
 				13B07FAE1A68108700A75B9A /* TheMovie */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -658,10 +666,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) DEBUG";
@@ -730,10 +735,7 @@
 					"-DFOLLY_CFG_NO_COROUTINES=1",
 					"-DFOLLY_HAVE_CLOCK_GETTIME=1",
 				);
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					" ",
-				);
+				OTHER_LDFLAGS = "$(inherited)  ";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
 				USE_HERMES = true;
