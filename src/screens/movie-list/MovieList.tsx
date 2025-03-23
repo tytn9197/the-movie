@@ -278,7 +278,7 @@ const MovieList = () => {
   }
 
   return (
-    <SafeAreaView style={[FLEX_1, styles.container]}>
+    <SafeAreaView style={[FLEX_1, styles.container]} edges={['top']}>
       <View style={[FLEX_1, styles.marginHorizontal]}>
         {isError && (
           <AppText color={COLORS.RED} size={getPx(10)} weight={600}>

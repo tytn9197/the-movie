@@ -107,7 +107,7 @@ const MovieDetails = () => {
   }
 
   return (
-    <SafeAreaView style={[FLEX_1, styles.container]}>
+    <SafeAreaView style={[FLEX_1, styles.container]} edges={['top']}>
       <Animated.ScrollView
         style={FLEX_1}
         showsVerticalScrollIndicator={false}

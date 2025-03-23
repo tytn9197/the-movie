@@ -38,6 +38,7 @@ export const MovieDetailsStyles = createStyleSheet(() => ({
   movieDetails: {
     flex: 1,
     marginEnd: getPx(5),
+    gap: getPx(8),
   },
   voteAndCreditsContainer: {
     flex: 1,
