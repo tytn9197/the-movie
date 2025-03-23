@@ -21,6 +21,7 @@ import {getPx} from '#utils/APP_UTILS';
 import {convertMinutesToHoursAndMinutes, getYearFromDate} from '#utils/HELPERS';
 import {BoxedText} from '#atoms/BoxedText/BoxedText';
 import {AppImage} from '#atoms/AppImage/AppImage';
+import { CircleProgress } from '#atoms/CirleProgress/CircleProgress';
 
 const MovieDetails = () => {
   const {styles} = useStyles(MovieDetailsStyles);
@@ -155,6 +156,7 @@ const MovieDetails = () => {
                 size={getPx(10)}
               />
             </AppText>
+            <CircleProgress targetProgress={data.vote_average / 10} size={getPx(100)} />
           </View>
         )}
       </Animated.ScrollView>
