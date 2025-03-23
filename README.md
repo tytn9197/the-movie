@@ -131,7 +131,13 @@ src/
 NOTE: Values are persisted 
 
 ## TODO
-Because time is limited, I cannot write a proper Atomic design pattern. I'll update update components with Storybook in future.
+1/ Because time is limited, I cannot write a proper Atomic design pattern. I'll update update components with Storybook in future. 
+
+2/ I'll refactor code, there are several components are repeated.
+
+3/ Add theme dark and light. 
+
+...
 
 ## Troubleshooting
 #### There is a bug in Android. It will crash the app when we goBack from details screen to listing screen. The root cause is react native screens. Here is a temporary solution: 
@@ -177,7 +183,7 @@ private fun startTransitionRecursive(parent: ViewGroup?) {
 }
  ```
 
- 
+
 
 ## Acknowledgments
 
