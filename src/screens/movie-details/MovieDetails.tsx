@@ -21,7 +21,7 @@ import {getPx} from '#utils/APP_UTILS';
 import {convertMinutesToHoursAndMinutes, getYearFromDate} from '#utils/HELPERS';
 import {BoxedText} from '#atoms/BoxedText/BoxedText';
 import {AppImage} from '#atoms/AppImage/AppImage';
-import { CircleProgress } from '#atoms/CirleProgress/CircleProgress';
+import {CircleProgress} from '#atoms/CirleProgress/CircleProgress';
 
 const MovieDetails = () => {
   const {styles} = useStyles(MovieDetailsStyles);
@@ -147,16 +147,36 @@ const MovieDetails = () => {
                 </View>
               </View>
             </View>
-            <AppText color={COLORS.WHITE} weight={600} size={getPx(10)}>
-              Status:{' '}
-              <AppText
-                text={data.status}
-                color={COLORS.WHITE}
-                weight={400}
-                size={getPx(10)}
-              />
-            </AppText>
-            <CircleProgress targetProgress={data.vote_average / 10} size={getPx(100)} />
+            <View style={styles.voteAndCreditsContainer}>
+              <View style={styles.voteContainer}>
+                <View style={styles.voteProgressContainer}>
+                  <CircleProgress
+                    unfilledColor={COLORS.LIGHT_GRAY_6}
+                    borderColor={'transparent'}
+                    color={COLORS.GREEN_2}
+                    textStyle={styles.voteProgressText}
+                    style={styles.voteProgress}
+                    targetProgress={data.vote_average / 10}
+                    size={getPx(40)}
+                  />
+                </View>
+                <AppText
+                  text="User Score"
+                  color={COLORS.WHITE}
+                  weight={600}
+                  size={getPx(8)}
+                  style={FLEX_1}
+                />
+              </View>
+              <View style={styles.creditsContainer}>
+                <AppText
+                  text="Credits"
+                  color={COLORS.WHITE}
+                  weight={600}
+                  size={getPx(10)}
+                />
+              </View>
+            </View>
           </View>
         )}
       </Animated.ScrollView>

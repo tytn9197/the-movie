@@ -1,14 +1,15 @@
 import React from 'react';
 import * as Progress from 'react-native-progress';
 
-interface CircleProgressProps {
+interface CircleProgressProps extends Progress.CirclePropTypes {
   size: number;
   targetProgress: number;
 }
 
-export const CircleProgress = ({size, targetProgress}: CircleProgressProps) => {
+export const CircleProgress = ({size, targetProgress, ...rest}: CircleProgressProps) => {
   return (
     <Progress.Circle
+      {...rest}
       progress={targetProgress}
       thickness={5}
       indeterminate={false}
