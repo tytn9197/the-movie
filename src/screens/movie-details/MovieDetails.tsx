@@ -1,6 +1,6 @@
-import {FLEX_1} from '#constants/STYLES';
-import React, { useMemo } from 'react';
-import {SafeAreaView, View} from 'react-native';
+import {FLEX_1, ROW_CENTERED} from '#constants/STYLES';
+import React, {useMemo} from 'react';
+import {SafeAreaView, TouchableOpacity, View} from 'react-native';
 import {useStyles} from 'react-native-unistyles';
 import {MovieDetailsStyles} from './MovieDetailsStyles';
 import Animated, {
@@ -12,7 +12,10 @@ import Animated, {
 import {ICONS} from '#constants/ICONS';
 import {AppText} from '#atoms/AppText/AppText';
 import {Header} from '#molecules/Header/Header';
-import {useGetMovieCreditsQuery, useGetMovieDetailsQuery} from '#apis/APIServices';
+import {
+  useGetMovieCreditsQuery,
+  useGetMovieDetailsQuery,
+} from '#apis/APIServices';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {MovieNavigatorParamList} from '#navigators/MovieNavigator';
 import {AppLoader} from '#atoms/AppLoader/AppLoader';
@@ -32,9 +35,38 @@ const MovieDetails = () => {
   const navigation = useNavigation();
 
   const {data, isLoading, isError, error} = useGetMovieDetailsQuery(id);
-  const {data: creditsData, isLoading: creditsLoading, isError: isCreditsError, error: creditsError} = useGetMovieCreditsQuery(id);
+  const {
+    data: creditsData,
+    isLoading: creditsLoading,
+    isError: isCreditsError,
+    error: creditsError,
+  } = useGetMovieCreditsQuery(id);
 
-  const directors = useMemo(() => creditsData?.crew.filter(crew => (crew.job === 'Director' || crew.job === 'Writer')), [creditsData]);
+  const directors = useMemo(() => {
+    const filteredDirectors =
+      creditsData?.crew.filter(
+        crew => crew.job === 'Director' || crew.job === 'Writer',
+      ) ?? [];
+
+    // 1 id can do multiple jobs
+    // merge their job into one id
+    const directorsMap: Record<
+      number,
+      {id: number; job: string; name: string}
+    > = {};
+    filteredDirectors?.forEach(director => {
+      if (directorsMap[director.id]) {
+        directorsMap[director.id].job = [
+          directorsMap[director.id].job,
+          director.job,
+        ].join(', ');
+      } else {
+        directorsMap[director.id] = {...director};
+      }
+    });
+
+    return Object.values(directorsMap);
+  }, [creditsData]);
 
   const scrollY = useSharedValue(0);
 
@@ -82,7 +114,7 @@ const MovieDetails = () => {
             {JSON.stringify(error)}
           </AppText>
         )}
-         {isCreditsError && (
+        {isCreditsError && (
           <AppText color={COLORS.RED} size={getPx(10)} weight={600}>
             {JSON.stringify(creditsError)}
           </AppText>
@@ -177,22 +209,65 @@ const MovieDetails = () => {
                 />
               </View>
               <View style={styles.creditsContainer}>
-                {!!directors && directors?.length > 0 && directors.map(director => (
-                  <View key={director.id}>
-                    <AppText
-                      text={director.name}
+                {!!directors &&
+                  directors?.length > 0 &&
+                  directors.map(director => (
+                    <View
+                      key={`${director.id}-${director.job}-${director.name}`}>
+                      <AppText
+                        text={director.name}
+                        color={COLORS.WHITE}
+                        weight={600}
+                        size={getPx(10)}
+                      />
+                      <AppText
+                        text={director.job}
+                        color={COLORS.WHITE}
+                        weight={400}
+                        size={getPx(10)}
+                      />
+                    </View>
+                  ))}
+              </View>
+            </View>
+            <View style={styles.overviewContainer}>
+              <AppText
+                text={data.tagline}
+                color={COLORS.WHITE}
+                weight={400}
+                size={getPx(10)}
+              />
+              <View style={{height: getPx(10)}} />
+              <AppText
+                text={'Overview'}
+                color={COLORS.WHITE}
+                weight={700}
+                size={getPx(13)}
+              />
+              <AppText
+                text={data.overview}
+                color={COLORS.WHITE}
+                weight={400}
+                size={getPx(10)}
+              />
+              <View style={{height: getPx(10)}} />
+              <View style={ROW_CENTERED}>
+                <TouchableOpacity style={styles.addToWatchlistButton}>
+                  <View style={styles.addToWatchlistContainer}>
+                    <ICONS.IC_WATCHLIST
+                      width={getPx(7)}
+                      height={getPx(9)}
                       color={COLORS.WHITE}
-                      weight={600}
-                      size={getPx(10)}
                     />
                     <AppText
-                      text={director.job}
+                      text={'Add to Watchlist'}
                       color={COLORS.WHITE}
-                      weight={400}
-                      size={getPx(10)}
+                      weight={700}
+                      size={getPx(11)}
                     />
                   </View>
-                ))}
+                </TouchableOpacity>
+                <View style={FLEX_1} />
               </View>
             </View>
           </View>

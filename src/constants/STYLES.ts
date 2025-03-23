@@ -16,3 +16,8 @@ export const SHADOW = {
     shadowOpacity: 0.5,
     elevation: 5,
 }
+
+export const ROW_CENTERED = {
+    flexDirection: 'row' as const,
+    alignItems: 'center' as const,
+}

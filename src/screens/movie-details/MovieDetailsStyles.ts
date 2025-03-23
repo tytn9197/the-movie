@@ -41,6 +41,10 @@ export const MovieDetailsStyles = createStyleSheet(() => ({
     flexDirection: 'row',
     margin: getPx(15),
   },
+  overviewContainer: {
+    marginHorizontal: getPx(15),
+    marginBottom: getPx(15),
+  },
   voteContainer: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -65,5 +69,19 @@ export const MovieDetailsStyles = createStyleSheet(() => ({
   },
   creditsContainer: {
     flex: 1,
+    gap: getPx(5),
+  },
+  addToWatchlistButton: {
+    padding: getPx(10),
+    borderRadius: getPx(5),
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+    borderColor: COLORS.WHITE,
+    marginTop: getPx(10),
+  },
+  addToWatchlistContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: getPx(5),
   },
 }));
