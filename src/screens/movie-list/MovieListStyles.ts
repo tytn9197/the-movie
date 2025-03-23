@@ -48,6 +48,8 @@ export const MovieListStyles = createStyleSheet(() => ({
     justifyContent: 'center',
   },
   logoContainer: {
+    height: getPx(100),
+    width: getPx(70),
     alignItems: 'center',
     justifyContent: 'center',
     overflow: 'hidden',

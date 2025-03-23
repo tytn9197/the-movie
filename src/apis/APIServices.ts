@@ -47,8 +47,26 @@ export const APIServices = createApi({
         return currentArg?.type !== previousArg?.type || currentArg?.page !== previousArg?.page
       },
     }),
+    getMoviesSearch: builder.query<MovieListType, {query: string, page: number}>({
+      query: ({query, page = 1}) => `search/movie?query=${query}&page=${page}`,
+      serializeQueryArgs: ({ }) => {
+        return true
+      },
+      merge: (currentCache, newData, { arg }) => {
+        if (arg.page === 1) {
+          return newData; 
+        }
 
+        return {
+          ...newData,
+          results: [...currentCache.results, ...newData.results],
+        };
+      },
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg?.query !== previousArg?.query || currentArg?.page !== previousArg?.page
+      },
+    }),
   }),
 });
 
-export const {useGetMovieDetailsQuery, useGetMovieListQuery, useGetMovieCreditsQuery} = APIServices;
+export const {useGetMovieDetailsQuery, useGetMovieListQuery, useGetMovieCreditsQuery, useLazyGetMoviesSearchQuery} = APIServices;

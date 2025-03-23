@@ -18,9 +18,12 @@ import {
   ExpandableViewItem,
 } from '#molecules/ExpandableView/ExpandableView';
 import {getPx} from '#utils/APP_UTILS';
-import {useGetMovieListQuery} from '#apis/APIServices';
+import {
+  useGetMovieListQuery,
+  useLazyGetMoviesSearchQuery,
+} from '#apis/APIServices';
 import {COLORS} from '#constants/COLORS';
-import {ResultType} from '#apis/movies/MovieListType';
+import {MovieListType, ResultType} from '#apis/movies/MovieListType';
 import MovieItem from './MovieItem';
 import {AppText} from '#atoms/AppText/AppText';
 import {getMovieTypeName, setMovieType, setSortBy} from '#slices/homeSlice';
@@ -31,7 +34,7 @@ import Animated, {
   useSharedValue,
   interpolate,
 } from 'react-native-reanimated';
-import { AppLoader } from '#atoms/AppLoader/AppLoader';
+import {AppLoader} from '#atoms/AppLoader/AppLoader';
 
 const MovieList = () => {
   const {styles} = useStyles(MovieListStyles);
@@ -40,8 +43,10 @@ const MovieList = () => {
   const movieType = useAppSelector(state => state.home.movieType);
   const sortBy = useAppSelector(state => state.home.sortBy);
 
-  const [search, setSearch] = useState<string>('');
   const [page, setPage] = useState<number>(1);
+  const [search, setSearch] = useState<string>('');
+  const [isSearching, setIsSearching] = useState<boolean>(false);
+  const [searchedData, setSearchedData] = useState<MovieListType | null>(null);
   const [isTypeExpanded, setIsTypeExpanded] = useState<boolean>(false);
   const [isSortByExpanded, setIsSortByExpanded] = useState<boolean>(false);
 
@@ -53,7 +58,7 @@ const MovieList = () => {
   const scrollY = useSharedValue(0);
 
   const logoSizes = useAnimatedStyle(() => {
-    const size = interpolate(scrollY.value, [0, 150], [200, 100], {
+    const size = interpolate(scrollY.value, [0, 150], [100, 50], {
       extrapolateRight: 'clamp',
     });
 
@@ -78,6 +83,17 @@ const MovieList = () => {
     page: page,
   });
 
+  const [
+    getMoviesSearch,
+    {
+      data: searchDataQuery,
+      isLoading: searchLoading,
+      isError: isSearchError,
+      isFetching: searchFetching,
+      error: searchError,
+    },
+  ] = useLazyGetMoviesSearchQuery();
+
   const renderEmptyComponent = () => {
     return (
       <AppText color={COLORS.GRAY} size={getPx(10)} weight={600}>
@@ -94,14 +110,39 @@ const MovieList = () => {
     return <View style={{height: getPx(10)}} />;
   };
 
-  const handleEndReached = () => {
-    if (!isFetching && !!data?.total_pages && page < data.total_pages) {
+  const handleEndReached = async () => {
+    if (
+      !isSearching &&
+      !isFetching &&
+      !!data?.total_pages &&
+      page < data.total_pages
+    ) {
+      setPage(prevPage => prevPage + 1);
+    }
+
+    if (
+      isSearching &&
+      !searchFetching &&
+      !!searchDataQuery?.total_pages &&
+      page < searchDataQuery.total_pages
+    ) {
+      const result = await getMoviesSearch({query: search, page: page + 1});
+      const newResults = result?.data?.results ?? [];
+
+      const newSearchedData = {
+        ...result.data,
+        results: [...newResults],
+      };
+
+      setSearchedData(newSearchedData as MovieListType);
       setPage(prevPage => prevPage + 1);
     }
   };
 
   const handleRefresh = () => {
     setPage(1);
+    setSearch('');
+    setIsSearching(false);
   };
 
   const handleMovieTypeChange = (item: ExpandableViewItem) => {
@@ -110,7 +151,7 @@ const MovieList = () => {
     }
 
     flatListRef.current?.scrollToOffset({offset: 0, animated: true});
-    setPage(1);
+    handleRefresh();
     dispatch(setMovieType(item.id as typeof movieType));
   };
 
@@ -142,12 +183,30 @@ const MovieList = () => {
     setIsSortByExpanded(prev => !prev);
   };
 
-  const handleSearch = () => {
+  const handleSearch = async () => {
     setPage(1);
+
+    if (search === '') {
+      setIsSearching(false);
+      return;
+    }
+
+    setIsSearching(true);
+    flatListRef.current?.scrollToOffset({offset: 0, animated: true});
+    const result = await getMoviesSearch({query: search, page: 1});
+    setSearchedData(result?.data ?? null);
   };
 
   const scrollHandler = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     scrollY.value = event.nativeEvent.contentOffset.y;
+  };
+
+  const handleMomentumScrollBegin = () => {
+    if (isTypeExpanded || isSortByExpanded) {
+      setIsTypeExpanded(false);
+      setIsSortByExpanded(false);
+      return;
+    }
   };
 
   const renderHeader = () => {
@@ -183,6 +242,7 @@ const MovieList = () => {
           placeholderTextColor={COLORS.GRAY}
           value={search}
           onChangeText={setSearch}
+          onSubmitEditing={handleSearch}
         />
         <TouchableOpacity style={styles.searchButton} onPress={handleSearch}>
           <AppText
@@ -214,10 +274,8 @@ const MovieList = () => {
     );
   };
 
-  if (isLoading) {
-    return (
-      <AppLoader />
-    );
+  if (isLoading || searchLoading) {
+    return <AppLoader />;
   }
 
   return (
@@ -228,33 +286,35 @@ const MovieList = () => {
             {JSON.stringify(error)}
           </AppText>
         )}
-        {!!data?.results && (
-          <>
-            <FlatList
-              ref={flatListRef}
-              showsVerticalScrollIndicator={false}
-              onScroll={scrollHandler}
-              style={FLEX_1}
-              data={data?.results}
-              renderItem={renderItem}
-              keyExtractor={item => JSON.stringify(item)}
-              ListEmptyComponent={renderEmptyComponent}
-              ItemSeparatorComponent={renderSeparator}
-              onEndReached={handleEndReached}
-              onEndReachedThreshold={0.5}
-              refreshing={isLoading}
-              ListHeaderComponent={renderHeader}
-              refreshControl={
-                <RefreshControl
-                  tintColor={COLORS.BLACK}
-                  refreshing={isLoading}
-                  onRefresh={handleRefresh}
-                />
-              }
-            />
-            {renderBackToTopButton()}
-          </>
+        {isSearching && isSearchError && (
+          <AppText color={COLORS.RED} size={getPx(10)} weight={600}>
+            {JSON.stringify(searchError)}
+          </AppText>
         )}
+        {renderHeader()}
+        <FlatList
+          ref={flatListRef}
+          showsVerticalScrollIndicator={false}
+          onScroll={scrollHandler}
+          onMomentumScrollBegin={handleMomentumScrollBegin}
+          style={FLEX_1}
+          data={isSearching ? searchedData?.results ?? [] : data?.results ?? []}
+          renderItem={renderItem}
+          keyExtractor={item => JSON.stringify(item)}
+          ListEmptyComponent={renderEmptyComponent}
+          ItemSeparatorComponent={renderSeparator}
+          onEndReached={handleEndReached}
+          onEndReachedThreshold={0.5}
+          refreshing={isLoading}
+          refreshControl={
+            <RefreshControl
+              tintColor={COLORS.BLACK}
+              refreshing={isLoading}
+              onRefresh={handleRefresh}
+            />
+          }
+        />
+        {renderBackToTopButton()}
       </View>
     </SafeAreaView>
   );
