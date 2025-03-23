@@ -3,10 +3,9 @@ import {createStyleSheet} from 'react-native-unistyles';
 
 export const HeaderStyles = createStyleSheet(() => ({
   container: {
-    width: '90%',
-    height: getPx(30),
     flexDirection: 'row',
     alignItems: 'center',
+    flex: 1
   },
   arrowLeft: {
     marginStart: getPx(10),
