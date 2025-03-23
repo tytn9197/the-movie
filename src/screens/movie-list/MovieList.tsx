@@ -226,7 +226,7 @@ const MovieList = () => {
           isExpanded={isTypeExpanded}
           onPressExpand={handleMovieTypeExpand}
         />
-        <View style={{height: getPx(8)}} />
+        <View style={{height: getPx(3)}} />
         <ExpandableView
           text="Sort by"
           items={SORT_BY_ITEMS}
@@ -247,7 +247,7 @@ const MovieList = () => {
           <AppText
             text="Search"
             weight={600}
-            size={getPx(10)}
+            size={getPx(8)}
             color={COLORS.LIGHT_GRAY}
           />
         </TouchableOpacity>

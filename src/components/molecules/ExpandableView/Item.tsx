@@ -18,7 +18,7 @@ export const Item = (props: ItemProps) => {
 
   return (
     <TouchableOpacity style={styles.textContainer(isSelected ?? false)} onPress={onPress}>
-        <AppText text={text} weight={400} size={getPx(10)} style={FLEX_SHRINK_1} />
+        <AppText text={text} weight={400} size={getPx(8)} style={FLEX_SHRINK_1} />
     </TouchableOpacity>
   );
 };
