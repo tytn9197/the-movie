@@ -50,7 +50,12 @@ export const MovieListStyles = createStyleSheet(() => ({
   logoContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    padding: getPx(5),
+    overflow: 'hidden',
+  },
+  posterImage: {
+    width: getPx(70),
+    height: getPx(100),
+    overflow: 'hidden',
   },
   itemDetailsContainer: {
     flexShrink: 1,

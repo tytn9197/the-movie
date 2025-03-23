@@ -3,14 +3,15 @@ import {TouchableOpacity, View} from 'react-native';
 import {MovieListStyles} from './MovieListStyles';
 import {useStyles} from 'react-native-unistyles';
 import {ResultType} from '#apis/movies/MovieListType';
-import {ICONS} from '#constants/ICONS';
-import {FLEX_GROW_1, FLEX_SHRINK_1, SHADOW} from '#constants/STYLES';
+import {FLEX_SHRINK_1, SHADOW} from '#constants/STYLES';
 import {AppText} from '#atoms/AppText/AppText';
 import {getPx} from '#utils/APP_UTILS';
 import {COLORS} from '#constants/COLORS';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { MovieNavigatorParamList } from '#navigators/MovieNavigator';
+import { AppImage } from '#atoms/AppImage/AppImage';
+import FastImage from 'react-native-fast-image';
 
 const MovieItem = ({item}: {item: ResultType}) => {
   const {styles} = useStyles(MovieListStyles);
@@ -19,14 +20,14 @@ const MovieItem = ({item}: {item: ResultType}) => {
   
   const handlePress = () => {
     navigation.navigate('MovieDetails', {
-      id: item.id.toString(),
+      id: item.id,
     });
   };
 
   return (
     <TouchableOpacity onPress={handlePress} style={[styles.movieItemContainer, SHADOW]}>
       <View style={styles.logoContainer}>
-        <ICONS.IC_LOGO style={FLEX_GROW_1} />
+        <AppImage style={styles.posterImage} imagePath={item.poster_path} resizeMode={FastImage.resizeMode.stretch}/>
       </View>
       <View style={{width: getPx(5)}} />
       <View style={styles.itemDetailsContainer}>

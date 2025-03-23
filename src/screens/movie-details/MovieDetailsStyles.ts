@@ -1,7 +1,5 @@
-import { APP_CONST } from '#constants/APP_CONSTANTS';
 import { COLORS } from '#constants/COLORS';
 import { getPx } from '#utils/APP_UTILS';
-import { StyleSheet } from 'react-native';
 import {createStyleSheet} from 'react-native-unistyles';
 
 export const MovieDetailsStyles = createStyleSheet(() => ({
@@ -25,7 +23,12 @@ export const MovieDetailsStyles = createStyleSheet(() => ({
     flex: 1,
     flexDirection: 'row',
   },
-  moviePoster: {
+  image: {
+    flex: 1,
+    maxWidth: getPx(50),
+    maxHeight: getPx(80),
+    borderRadius: getPx(5),
+    overflow: 'hidden',
     marginHorizontal: getPx(10),
   },
   movieDetails: {

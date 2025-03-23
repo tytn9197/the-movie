@@ -20,6 +20,7 @@ import {COLORS} from '#constants/COLORS';
 import {getPx} from '#utils/APP_UTILS';
 import {convertMinutesToHoursAndMinutes, getYearFromDate} from '#utils/HELPERS';
 import {BoxedText} from '#atoms/BoxedText/BoxedText';
+import {AppImage} from '#atoms/AppImage/AppImage';
 
 const MovieDetails = () => {
   const {styles} = useStyles(MovieDetailsStyles);
@@ -87,10 +88,11 @@ const MovieDetails = () => {
               />
               <View style={{height: getPx(28)}} />
               <View style={styles.movieDetailsContainer}>
-                <ICONS.IC_LOGO
-                  width={getPx(50)}
-                  height={getPx(80)}
-                  style={styles.moviePoster}
+                <AppImage
+                  style={styles.image}
+                  imagePath={
+                    !!data && data.backdrop_path ? data.backdrop_path : ''
+                  }
                 />
                 <View style={styles.movieDetails}>
                   <BoxedText text={data.imdb_id.toString()} />
