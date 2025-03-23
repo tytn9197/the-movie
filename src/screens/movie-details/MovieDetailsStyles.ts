@@ -64,9 +64,6 @@ export const MovieDetailsStyles = createStyleSheet(() => ({
     fontFamily: APP_CONST.FONTS.SOURCE_SANS_3,
   },
   creditsContainer: {
-    justifyContent: 'center',
-    backgroundColor: COLORS.BLUE_3,
     flex: 1,
-    alignItems: 'flex-end',
   },
 }));

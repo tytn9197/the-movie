@@ -1,5 +1,5 @@
 import {FLEX_1} from '#constants/STYLES';
-import React from 'react';
+import React, { useMemo } from 'react';
 import {SafeAreaView, View} from 'react-native';
 import {useStyles} from 'react-native-unistyles';
 import {MovieDetailsStyles} from './MovieDetailsStyles';
@@ -12,7 +12,7 @@ import Animated, {
 import {ICONS} from '#constants/ICONS';
 import {AppText} from '#atoms/AppText/AppText';
 import {Header} from '#molecules/Header/Header';
-import {useGetMovieDetailsQuery} from '#apis/APIServices';
+import {useGetMovieCreditsQuery, useGetMovieDetailsQuery} from '#apis/APIServices';
 import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import {MovieNavigatorParamList} from '#navigators/MovieNavigator';
 import {AppLoader} from '#atoms/AppLoader/AppLoader';
@@ -32,6 +32,9 @@ const MovieDetails = () => {
   const navigation = useNavigation();
 
   const {data, isLoading, isError, error} = useGetMovieDetailsQuery(id);
+  const {data: creditsData, isLoading: creditsLoading, isError: isCreditsError, error: creditsError} = useGetMovieCreditsQuery(id);
+
+  const directors = useMemo(() => creditsData?.crew.filter(crew => (crew.job === 'Director' || crew.job === 'Writer')), [creditsData]);
 
   const scrollY = useSharedValue(0);
 
@@ -56,7 +59,7 @@ const MovieDetails = () => {
     navigation.goBack();
   };
 
-  if (isLoading) {
+  if (isLoading || creditsLoading) {
     return <AppLoader />;
   }
 
@@ -79,7 +82,12 @@ const MovieDetails = () => {
             {JSON.stringify(error)}
           </AppText>
         )}
-        {!!data && (
+         {isCreditsError && (
+          <AppText color={COLORS.RED} size={getPx(10)} weight={600}>
+            {JSON.stringify(creditsError)}
+          </AppText>
+        )}
+        {!!data && !!creditsData && (
           <View style={styles.contentContainer}>
             <View style={styles.headerContainer}>
               <Header
@@ -169,12 +177,22 @@ const MovieDetails = () => {
                 />
               </View>
               <View style={styles.creditsContainer}>
-                <AppText
-                  text="Credits"
-                  color={COLORS.WHITE}
-                  weight={600}
-                  size={getPx(10)}
-                />
+                {!!directors && directors?.length > 0 && directors.map(director => (
+                  <View key={director.id}>
+                    <AppText
+                      text={director.name}
+                      color={COLORS.WHITE}
+                      weight={600}
+                      size={getPx(10)}
+                    />
+                    <AppText
+                      text={director.job}
+                      color={COLORS.WHITE}
+                      weight={400}
+                      size={getPx(10)}
+                    />
+                  </View>
+                ))}
               </View>
             </View>
           </View>

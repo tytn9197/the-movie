@@ -2,6 +2,7 @@ import {KEYS} from '#constants/KEYS';
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import { MovieDetailsType } from './movies/MovieDetailsType';
 import { MovieListType } from './movies/MovieListType';
+import { MovieCreditsType } from './movies/MovieCreditsType';
 
 type MovieListQueryArgs = {
   type: string;
@@ -22,6 +23,9 @@ export const APIServices = createApi({
   endpoints: builder => ({
     getMovieDetails: builder.query<MovieDetailsType, number>({
       query: (id) => `movie/${id}`,
+    }),
+    getMovieCredits: builder.query<MovieCreditsType, number>({
+      query: (id) => `movie/${id}/credits`,
     }),
     getMovieList: builder.query<MovieListType, MovieListQueryArgs>({
       query: ({type, page = 1}) => `movie/${type}?page=${page}`,
@@ -47,4 +51,4 @@ export const APIServices = createApi({
   }),
 });
 
-export const {useGetMovieDetailsQuery, useGetMovieListQuery} = APIServices;
+export const {useGetMovieDetailsQuery, useGetMovieListQuery, useGetMovieCreditsQuery} = APIServices;
