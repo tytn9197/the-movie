@@ -1,91 +1,207 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
-# Getting Started
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+# React Native Project
 
-NOTE: This project is required SDK > 17.0.0 and node > 20.0.0 and pod > 1.15.0. You can use NVM and sdkman to install the required versions.
+This is a modern React Native application bootstrapped with [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
-Please create your own KEYS file in src/constants/KEYS.ts and add your own keys.
-example:
+## Overview
+
+This project is a React Native mobile application that provides [`The Movie DB`](https://www.themoviedb.org/) with movie list view and moview details. It's built using the latest React Native 0.76 and follows modern development practices.
+
+## Prerequisites
+
+Before you begin, ensure you have the following installed:
+
+- Node.js >= 18.0.0
+- Yarn >= 4.0.0
+- React Native CLI >= 15.0.0
+- React Native >= 0.76.0
+- Android SDK > 17.0.0
+- CocoaPods > 1.15.0 (for iOS development)
+
+**Recommended tools:**
+- NVM for managing Node.js versions
+- SDKMAN for managing Android SDK versions
+
+## Setup
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/tytn9197/the-movie.git
+cd your-repo-name
 ```
+
+### 2. Install dependencies
+You should install both npm and yarn
+
+```
+    npm install
+```
+
+then 
+
+```
+    yarn install
+```
+using yarn install to get data from @storybook/react.
+
+### 3. iOS Setup (macOS only)
+
+```bash
+cd ios
+pod install
+cd ..
+```
+
+# 4. Environment Configuration (IMPORTANT)
+
+Create a `KEYS.ts` file in the `src/constants/` directory:
+
+```typescript
 export const KEYS = {
-   ACCESS_TOKEN: 'ACCESS_TOKEN',
-   API_KEY: 'API_KEY',
+   ACCESS_TOKEN: 'YOUR_ACCESS_TOKEN',
+   API_KEY: 'YOUR_API_KEY',
 }
 ```
 
+Replace the placeholder values with your actual API keys. After login to [`The Movie DB`](https://www.themoviedb.org/), you can get api key and access token in [`Settings`](https://www.themoviedb.org/settings/api)
 
-## Step 1: Start the Metro Server
+## Running the Application
 
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
-
-To start Metro, run the following command from the _root_ of your React Native project:
-
-```bash
-# using npm
-npm start
-
-# OR using Yarn
-yarn start
-```
-
-## Step 2: Start your Application
-
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
-
-### For Android
+### Run on Android
 
 ```bash
-# using npm
-npm run android
-
-# OR using Yarn
-yarn android
+npx react-native run-android
 ```
 
-### For iOS
+### Run on iOS
 
 ```bash
-# using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
+npx react-native run-ios
 ```
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+## Project Structure
+src/ 
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+├── assets/ # Images, fonts, and other static assets 
 
-## Step 3: Modifying your App
+├── components/ # Reusable UI components 
 
-Now that you have successfully run the app, let's modify it.
+│───├── atoms/ # Basic building blocks (buttons, inputs, labels, etc.) 
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+│───├── molecules/ # Groups of atoms functioning together (form fields, menu items) 
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+│───├── organisms/ # Complex UI components composed of molecules/atoms 
 
-## Congratulations! :tada:
+│───├── templates/ # Page layouts with placeholders for content 
 
-You've successfully run and modified your React Native App. :partying_face:
 
-### Now what?
+├── constants/ # Application constants and configuration 
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
+├── navigation/ # Navigation configuration 
 
-# Troubleshooting
+├── screens/ # Application screens 
 
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+├── services/ # API services and other external services 
 
-# Learn More
 
-To learn more about React Native, take a look at the following resources:
+├── store/ # State management (Redux/Context) 
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+├── styles/ # Global styles 
+
+└── utils/ # Utility functions 
+
+## Features
+
+```
+- HOME page: 
+    1/ Movie List
+        a/ Filter by category type
+        b/ Search movies by name
+        c/ Load more movies (both normal listing and searched listing)
+        d/ Pull to refresh list
+        e/ Animation for header and screen navagation
+    2/ Movie details:
+        a/ View details 
+        b/ View cast members
+        c/ Director and Writer are filtered properly base on ID
+
+```
+NOTE: Values are persisted 
+
+## TODO
+Because time is limited, I cannot write a proper Atomic design pattern. I'll update update components with Storybook in future.
+
+## Troubleshooting
+#### There is a bug in Android. It will crash the app when we goBack from details screen to listing screen. The root cause is react native screens. Here is a temporary solution: 
+Find `startTransitionRecursive` in `node_modules/react-native-screens/android/src/main/java/com/swmansion/rnscreens/Screen.kt`
+ and delete that function
+
+from 
+ ```
+private fun startTransitionRecursive(parent: ViewGroup?) {
+    parent?.let {
+        for (i in 0 until it.childCount) {
+            val child = it.getChildAt(i)
+
+            if (parent is SwipeRefreshLayout && child is ImageView) {
+                // SwipeRefreshLayout class which has CircleImageView as a child,
+                // does not handle `startViewTransition` properly.
+                // It has a custom `getChildDrawingOrder` method which returns
+                // wrong index if we called `startViewTransition` on the views on new arch.
+                // We add a simple View to bump the number of children to make it work.
+                // TODO: find a better way to handle this scenario
+                it.addView(View(context), i)
+            } else {
+                child?.let { view -> it.startViewTransition(view) }
+            }
+
+            if (child is ScreenStackHeaderConfig) {
+                // we want to start transition on children of the toolbar too,
+                // which is not a child of ScreenStackHeaderConfig
+                startTransitionRecursive(child.toolbar)
+            }
+
+            if (child is ViewGroup) {
+                startTransitionRecursive(child)
+            }
+        }
+    }
+}
+ ```
+
+ to
+ ```
+private fun startTransitionRecursive(parent: ViewGroup?) {
+}
+ ```
+
+ 
+
+## Acknowledgments
+
+- [React Navigation V7](https://reactnavigation.org/) - Routing and navigation for React Native apps
+  - Bottom Tabs Navigator
+  - Native Stack Navigator
+- [Redux](https://redux.js.org/) & [Redux Toolkit](https://redux-toolkit.js.org/) - State management solution
+- [Redux Persist](https://github.com/rt2zz/redux-persist) - Persist and rehydrate Redux stores
+- [React Native MMKV](https://github.com/mrousavy/react-native-mmkv) - Fast, efficient key-value storage
+- [React Native Fast Image](https://github.com/DylanVann/react-native-fast-image) - Performant image loading
+- [React Native Reanimated](https://docs.swmansion.com/react-native-reanimated/) - Animation library
+- [React Native SVG](https://github.com/software-mansion/react-native-svg) - SVG support for React Native
+- [Lottie React Native](https://github.com/lottie-react-native/lottie-react-native) - Animation library for Lottie files
+- [React Native Progress](https://github.com/oblador/react-native-progress) - Progress indicators and spinners
+- [React Native Unistyles](https://github.com/jpudysz/react-native-unistyles) - Universal styling solution
+- [Storybook](https://storybook.js.org/) - Development environment for UI components
+
+Development Tools:
+- [TypeScript](https://www.typescriptlang.org/) - Static type checking for JavaScript
+- [ESLint](https://eslint.org/) - JavaScript linting utility
+- [Prettier](https://prettier.io/) - Code formatter
+- [Jest](https://jestjs.io/) - JavaScript testing framework
+- [Babel](https://babeljs.io/) - JavaScript compiler
+- [Metro](https://facebook.github.io/metro/) - JavaScript bundler for React Native
+- [Reactotron](https://github.com/infinitered/reactotron) - Debugging tool for React Native
+
+---
