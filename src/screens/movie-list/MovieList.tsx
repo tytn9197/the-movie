@@ -2,7 +2,6 @@ import {ICONS} from '#constants/ICONS';
 import React, {useRef, useState} from 'react';
 import {
   FlatList,
-  SafeAreaView,
   TextInput,
   View,
   TouchableOpacity,
@@ -35,6 +34,8 @@ import Animated, {
   interpolate,
 } from 'react-native-reanimated';
 import {AppLoader} from '#atoms/AppLoader/AppLoader';
+import { EmptyList } from '#atoms/EmptyList/EmptyList';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const MovieList = () => {
   const {styles} = useStyles(MovieListStyles);
@@ -96,9 +97,7 @@ const MovieList = () => {
 
   const renderEmptyComponent = () => {
     return (
-      <AppText color={COLORS.GRAY} size={getPx(10)} weight={600}>
-        No data
-      </AppText>
+      <EmptyList source={require('../../assets/animations/lottie_empty.json')} />
     );
   };
 

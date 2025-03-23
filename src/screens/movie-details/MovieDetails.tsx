@@ -1,6 +1,6 @@
 import {FLEX_1, ROW_CENTERED} from '#constants/STYLES';
 import React, {useMemo} from 'react';
-import {FlatList, SafeAreaView, TouchableOpacity, View} from 'react-native';
+import {FlatList, TouchableOpacity, View} from 'react-native';
 import {useStyles} from 'react-native-unistyles';
 import {MovieDetailsStyles} from './MovieDetailsStyles';
 import Animated, {
@@ -27,6 +27,7 @@ import {AppImage} from '#atoms/AppImage/AppImage';
 import {CircleProgress} from '#atoms/CirleProgress/CircleProgress';
 import CastItem from './CastItem';
 import { CastType } from '#apis/movies/MovieCreditsType';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const MovieDetails = () => {
   const {styles} = useStyles(MovieDetailsStyles);
@@ -79,7 +80,7 @@ const MovieDetails = () => {
   });
 
   const logoSizes = useAnimatedStyle(() => {
-    const size = interpolate(scrollY.value, [0, 150], [200, 100], {
+    const size = interpolate(scrollY.value, [0, 150], [100, 50], {
       extrapolateRight: 'clamp',
     });
 
